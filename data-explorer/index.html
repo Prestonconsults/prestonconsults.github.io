@@ -1,68 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Preston Consults Data Repository</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
 </head>
 <body>
 
 <header>
   <h1>Data Explorer</h1>
-  <p>Interactive explorer for indicators, countries, and years.</p>
 </header>
 
-<section id="filters">
-  <div class="filter-panel">
-    <h3>Indicators / Datasets</h3>
-    <input type="text" id="indicatorSearch" placeholder="Search indicators..." class="search-box">
-    <label><input type="checkbox" id="indicatorSelectAll"> Select All</label>
-    <div id="indicatorFilters" class="checkbox-panel"></div>
-  </div>
+<div class="layout">
 
-  <div class="filter-panel">
-    <h3>Countries</h3>
-    <input type="text" id="countrySearch" placeholder="Search countries..." class="search-box">
-    <label><input type="checkbox" id="countrySelectAll"> Select All</label>
-    <div id="countryFilters" class="checkbox-panel"></div>
-  </div>
+  <!-- LEFT FILTER PANEL -->
+  <aside class="sidebar">
 
-  <div class="filter-panel">
-    <h3>Years</h3>
-    <label><input type="checkbox" id="yearSelectAll"> Select All</label>
-    <div id="yearFilters" class="checkbox-panel"></div>
-  </div>
+    <div class="filter-group">
+      <button class="filter-toggle">Indicators</button>
+      <div class="filter-content" id="indicatorFilters"></div>
+    </div>
 
-  <button id="showBtn">Show Results</button>
-</section>
+    <div class="filter-group">
+      <button class="filter-toggle">Countries</button>
+      <div class="filter-content" id="countryFilters"></div>
+    </div>
 
-<div id="tableContainer" class="card" style="display:none;">
-  <button id="downloadBtn">Download CSV</button>
-  <div id="dataTableContainer">
-    <table id="dataTable">
-      <thead>
-        <tr id="tableHeader">
-          <th>Indicator</th>
-          <th>Category</th>
-          <th>Country</th>
-          <th>Notes</th>
-          <th>Source</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+    <div class="filter-group">
+      <button class="filter-toggle">Years</button>
+      <div class="filter-content" id="yearFilters"></div>
+    </div>
+
+    <button id="applyBtn">Apply Selection</button>
+
+  </aside>
+
+  <!-- RIGHT CONTENT -->
+  <main class="content">
+
+    <div class="view-toggle">
+      <button id="tableViewBtn">Table View</button>
+      <button id="chartViewBtn">Chart View</button>
+    </div>
+
+    <div id="tableSection">
+      <div class="table-wrapper">
+        <table id="dataTable">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="chartSection" style="display:none;">
+      <div class="chart-controls">
+        <select id="chartIndicator"></select>
+        <select id="chartCountry"></select>
+      </div>
+      <canvas id="chartCanvas"></canvas>
+    </div>
+
+  </main>
 </div>
 
-<div id="chartContainer" class="card" style="display:none;">
-  <h3>Chart View</h3>
-  <canvas id="chartCanvas" height="300"></canvas>
-</div>
+<footer>
+  Developed by: Preston Consults Ltd Research and Data Analysis Team
+</footer>
 
 <script src="app.js"></script>
-<br/>
-<div><p><b>Developed by:</b> Preston Consults Ltd Research and Data Analysis Team</p></div>
 </body>
 </html>
