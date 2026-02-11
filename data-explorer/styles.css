@@ -1,75 +1,107 @@
 body {
-  font-family: Arial, sans-serif;
   margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 .layout {
   display: flex;
+  min-height: 100vh;
 }
 
-.filters {
-  width: 250px;
-  background: #1f2d3d;
+/* Sidebar */
+.sidebar {
+  width: 280px;
+  background: #1e2a38;
   color: white;
-  padding: 15px;
-  height: 100vh;
+  padding: 20px;
+}
+
+.filter-block h3 {
+  cursor: pointer;
+  margin: 10px 0;
+}
+
+.filter-content {
+  max-height: 200px;
   overflow-y: auto;
+  display: none;
+  background: #2f3f52;
+  padding: 10px;
+  border-radius: 5px;
 }
 
-.filters h3 {
-  margin-top: 20px;
-}
-
-.filters button {
+.filter-content label {
+  display: block;
+  font-size: 13px;
   margin-bottom: 5px;
 }
 
-.filters label {
-  display: block;
-  font-size: 13px;
+#applyFilters {
+  margin-top: 15px;
+  width: 100%;
+  padding: 8px;
+  background: #4CAF50;
+  border: none;
+  color: white;
+  cursor: pointer;
 }
 
-.content {
+/* Main content */
+.main-content {
   flex: 1;
   padding: 20px;
-  background: #f4f6f9;
 }
 
-.viewToggle {
-  margin-bottom: 15px;
+.view-toggle button {
+  margin-right: 10px;
+  padding: 6px 12px;
+  cursor: pointer;
 }
 
+/* Table */
 .table-container {
   overflow-x: auto;
-  background: white;
+  max-width: 100%;
 }
 
 table {
   border-collapse: collapse;
-  min-width: 900px;
+  min-width: max-content;
+  font-size: 13px;
 }
 
 th, td {
-  border: 1px solid #ccc;
-  padding: 6px;
-  text-align: right;
+  border: 1px solid #ddd;
+  padding: 6px 10px;
   white-space: nowrap;
 }
 
-th:first-child,
-td:first-child {
+th {
+  background: #f2f2f2;
+}
+
+td:first-child, th:first-child {
   position: sticky;
   left: 0;
   background: white;
-  text-align: left;
-  min-width: 250px;
-  max-width: 300px;
-  white-space: normal;
+  z-index: 2;
+  min-width: 280px;
 }
 
+/* Chart */
+.chart-wrapper {
+  max-width: 800px;
+}
+
+.chart-controls {
+  margin-bottom: 10px;
+}
+
+/* Footer */
 footer {
+  background: linear-gradient(90deg, #1e2a38, #4CAF50);
+  color: white;
   text-align: center;
   padding: 15px;
-  background: linear-gradient(to right, #1f2d3d, #2e5aac);
-  color: white;
+  font-size: 14px;
 }
