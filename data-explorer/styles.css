@@ -1,106 +1,75 @@
 body {
-  margin: 0;
   font-family: Arial, sans-serif;
-}
-
-header {
-  background: #003366;
-  color: white;
-  padding: 15px;
-  text-align: center;
+  margin: 0;
 }
 
 .layout {
   display: flex;
 }
 
-/* Sidebar */
-.sidebar {
+.filters {
   width: 250px;
-  background: #f2f2f2;
-  padding: 15px;
-  border-right: 1px solid #ddd;
-}
-
-.filter-group {
-  margin-bottom: 15px;
-}
-
-.filter-toggle {
-  width: 100%;
-  padding: 8px;
-  background: #007acc;
+  background: #1f2d3d;
   color: white;
-  border: none;
-  cursor: pointer;
-}
-
-.filter-content {
-  display: none;
-  max-height: 200px;
+  padding: 15px;
+  height: 100vh;
   overflow-y: auto;
-  background: white;
-  padding: 8px;
-  border: 1px solid #ccc;
 }
 
-.filter-content label {
+.filters h3 {
+  margin-top: 20px;
+}
+
+.filters button {
+  margin-bottom: 5px;
+}
+
+.filters label {
   display: block;
+  font-size: 13px;
 }
 
-/* Main content */
 .content {
   flex: 1;
   padding: 20px;
+  background: #f4f6f9;
 }
 
-.view-toggle {
+.viewToggle {
   margin-bottom: 15px;
 }
 
-.view-toggle button {
-  padding: 8px 15px;
-  margin-right: 10px;
-  background: #007acc;
-  color: white;
-  border: none;
-  cursor: pointer;
-}
-
-/* Table */
-.table-wrapper {
+.table-container {
   overflow-x: auto;
+  background: white;
 }
 
 table {
   border-collapse: collapse;
-  min-width: max-content;
+  min-width: 900px;
 }
 
 th, td {
-  border: 1px solid #ddd;
-  padding: 6px 10px;
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: right;
   white-space: nowrap;
 }
 
-th:first-child, td:first-child {
+th:first-child,
+td:first-child {
   position: sticky;
   left: 0;
-  background: #f9f9f9;
+  background: white;
+  text-align: left;
   min-width: 250px;
+  max-width: 300px;
+  white-space: normal;
 }
 
-/* Chart */
-#chartCanvas {
-  max-width: 700px;
-  height: 400px;
-}
-
-/* Footer */
 footer {
-  background: linear-gradient(90deg,#003366,#007acc);
-  color: white;
   text-align: center;
   padding: 15px;
-  margin-top: 30px;
+  background: linear-gradient(to right, #1f2d3d, #2e5aac);
+  color: white;
 }
