@@ -3,66 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <title>Preston Consults Data Repository</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="style.css">
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-<body>
 
-<header>
-  <h1>Data Explorer</h1>
-</header>
+<body>
 
 <div class="layout">
 
   <!-- LEFT FILTER PANEL -->
-  <aside class="sidebar">
+  <div class="filters">
 
-    <div class="filter-group">
-      <button class="filter-toggle">Indicators</button>
-      <div class="filter-content" id="indicatorFilters"></div>
-    </div>
+    <h3>Indicators</h3>
+    <button onclick="selectAll('indicator')">Select All</button>
+    <div id="indicatorBox"></div>
 
-    <div class="filter-group">
-      <button class="filter-toggle">Countries</button>
-      <div class="filter-content" id="countryFilters"></div>
-    </div>
+    <h3>Countries</h3>
+    <button onclick="selectAll('country')">Select All</button>
+    <div id="countryBox"></div>
 
-    <div class="filter-group">
-      <button class="filter-toggle">Years</button>
-      <div class="filter-content" id="yearFilters"></div>
-    </div>
+    <h3>Years</h3>
+    <button onclick="selectAll('year')">Select All</button>
+    <div id="yearBox"></div>
 
-    <button id="applyBtn">Apply Selection</button>
+    <button onclick="applyFilters()">Apply</button>
+  </div>
 
-  </aside>
 
   <!-- RIGHT CONTENT -->
-  <main class="content">
+  <div class="content">
 
-    <div class="view-toggle">
-      <button id="tableViewBtn">Table View</button>
-      <button id="chartViewBtn">Chart View</button>
+    <div class="viewToggle">
+      <button onclick="showTable()">Table View</button>
+      <button onclick="showChart()">Chart View</button>
     </div>
 
-    <div id="tableSection">
-      <div class="table-wrapper">
-        <table id="dataTable">
-          <thead></thead>
-          <tbody></tbody>
-        </table>
+    <div id="tableView">
+      <div class="table-container">
+        <table id="dataTable"></table>
       </div>
     </div>
 
-    <div id="chartSection" style="display:none;">
+    <div id="chartView" style="display:none;">
       <div class="chart-controls">
         <select id="chartIndicator"></select>
         <select id="chartCountry"></select>
       </div>
-      <canvas id="chartCanvas"></canvas>
+      <canvas id="myChart"></canvas>
     </div>
 
-  </main>
+  </div>
 </div>
 
 <footer>
