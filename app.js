@@ -7,9 +7,9 @@ fetch(sheetURL)
   .then(res => res.text())
   .then(csvText => {
     const rows = csvText.trim().split('\n');
-    const headers = rows.shift().split(',');
+    const headers = rows.shift().split(',').map(h => h.trim());
     const yearColumns = headers.filter(h => /^\d{4}$/.test(h));
-    const otherColumns = headers.filter(h => !/^\d{4}$/.test(h)); // name, category, country, notes, source
+    const otherColumns = headers.filter(h => !/^\d{4}$/.test(h)); // indicator/category/country/notes/source
 
     const data = rows.map(r=>{
       const cols = r.split(',');
@@ -86,13 +86,16 @@ fetch(sheetURL)
         theadRow.appendChild(th);
       });
 
+      const notesColumn = otherColumns[3];
+      const sourceColumn = otherColumns[4];
+
       filtered.forEach(d=>{
         const row = document.createElement('tr');
         row.innerHTML = `<td>${d[otherColumns[0]]}</td>
                          <td>${d[otherColumns[1]]}</td>
                          <td>${d[otherColumns[2]]}</td>
-                         <td>${d.notes||''}</td>
-                         <td>${d.source||''}</td>`;
+                         <td>${notesColumn ? (d[notesColumn] || '') : ''}</td>
+                         <td>${sourceColumn ? (d[sourceColumn] || '') : ''}</td>`;
         years.forEach(y=>{
           const td = document.createElement('td');
           td.textContent = d[y] !== null ? d[y] : '-';
@@ -115,7 +118,7 @@ fetch(sheetURL)
       if(chartInstance) chartInstance.destroy();
       chartInstance = new Chart(ctx,{
         type: 'line',
-        data: { labels, datasets: [{ label: selected['Indicator'], data: values, borderColor:'blue', fill:false }] },
+        data: { labels, datasets: [{ label: selected[otherColumns[0]] || 'Selected Indicator', data: values, borderColor:'blue', fill:false }] },
         options: { responsive:true, plugins:{legend:{display:true}}, scales:{y:{beginAtZero:false}} }
       });
 
