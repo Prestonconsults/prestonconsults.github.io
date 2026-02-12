@@ -114,3 +114,18 @@ footer {
   color:white;
   margin-top:20px;
 }
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #f2f2f2;
+  z-index: 3;
+}
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 2;
+}
+
