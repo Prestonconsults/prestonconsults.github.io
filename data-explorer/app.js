@@ -158,7 +158,7 @@ fetch(sheetURL)
 
       const link = document.createElement('a');
       link.href = encodeURI(csv);
-      link.download = 'data_repository.csv';
+      link.download = 'preston_consult_data_repository.csv';
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
