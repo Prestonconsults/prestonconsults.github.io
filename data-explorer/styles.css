@@ -1,264 +1,88 @@
-/* =========================
-   GLOBAL RESET
-========================= */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "Segoe UI", Roboto, Arial, sans-serif;
-}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preston Consults Data Explorer</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
 
-body {
-  background-color: #f4f6f9;
-  color: #1f2937;
-  font-size: 14px;
-}
+<div class="container">
 
-/* =========================
-   LAYOUT
-========================= */
-.container {
-  display: flex;
-  min-height: 100vh;
-}
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="filter-section">
+      <h3 class="accordion-header" data-target="indicatorPanel">Indicators <span class="arrow">▼</span></h3>
+      <div id="indicatorPanel" class="sidebar-section"></div>
+    </div>
 
-/* =========================
-   SIDEBAR
-========================= */
-.sidebar {
-  width: 280px;
-  background: #0f172a;
-  color: #ffffff;
-  padding: 20px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  position: relative;
-  z-index: 1000;
-}
+    <div class="filter-section">
+      <h3 class="accordion-header" data-target="countryPanel">Countries <span class="arrow">▼</span></h3>
+      <div id="countryPanel" class="sidebar-section"></div>
+    </div>
 
-.sidebar.hidden {
-  transform: translateX(-100%);
-}
+    <div class="filter-section">
+      <h3 class="accordion-header" data-target="yearPanel">Years <span class="arrow">▼</span></h3>
+      <div id="yearPanel" class="sidebar-section"></div>
+    </div>
 
-.sidebar h3 {
-  font-size: 15px;
-  font-weight: 600;
-  margin-bottom: 12px;
-  margin-top: 18px;
-  letter-spacing: 0.3px;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: color 0.2s ease;
-}
+    <button id="showBtn">Show Results</button>
+  </aside>
 
-.sidebar h3:hover {
-  color: #38bdf8;
-}
+  <!-- MAIN CONTENT -->
+  <main class="main">
+    <div class="view-toggle">
+      <button id="tableToggle" class="active">Table View</button>
+      <button id="chartToggle">Chart View</button>
+    </div>
 
-.sidebar-section {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.35s ease, opacity 0.3s ease;
-  opacity: 0;
-}
+    <!-- PLACEHOLDER -->
+    <div id="placeholderMessage" class="placeholder">
+      <p id="placeholderText">Welcome to the Data Explorer.<br>Please select filters and click "Show Results" to begin.</p>
+    </div>
 
-.sidebar-section.active {
-  max-height: 500px;
-  opacity: 1;
-}
+    <!-- TABLE -->
+    <div id="tableContainer" class="table-container" style="display:none;">
+      <button id="exportBtn">Export Data</button>
+      <table id="dataTable">
+        <thead><tr></tr></thead>
+        <tbody></tbody>
+      </table>
+      <div class="pagination">
+        <label>Rows per page:
+          <select id="rowsPerPage">
+            <option value="10">10</option>
+            <option value="25" selected>25</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+          </select>
+        </label>
+        <button id="prevPage">◀</button>
+        <button id="nextPage">▶</button>
+        <span id="pageInfo"></span>
+      </div>
+    </div>
 
-.sidebar label {
-  display: block;
-  margin: 6px 0;
-  font-size: 13px;
-  cursor: pointer;
-}
+    <!-- CHART -->
+    <div id="chartContainer" class="table-container" style="display:none; height:400px;">
+      <label>Select Indicator:
+        <select id="chartIndicator"></select>
+      </label>
+      <label>Select Country:
+        <select id="chartCountry"></select>
+      </label>
+      <canvas id="chartCanvas"></canvas>
+    </div>
+  </main>
 
-.sidebar input[type="checkbox"] {
-  margin-right: 6px;
-}
+</div>
 
-/* Active highlight */
-.sidebar input[type="checkbox"]:checked + span {
-  color: #38bdf8;
-  font-weight: 500;
-}
+<footer>
+  <b>Developed by:</b> Preston Consults Ltd Research and Data Analysis Team
+</footer>
 
-/* =========================
-   MAIN CONTENT
-========================= */
-.main {
-  flex: 1;
-  padding: 25px;
-  transition: margin-left 0.3s ease;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-button {
-  background-color: #1d4ed8;
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  margin: 5px 5px 10px 0;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 13px;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
-
-button:hover {
-  background-color: #2563eb;
-}
-
-button:active {
-  transform: scale(0.98);
-}
-
-button.secondary {
-  background-color: #e5e7eb;
-  color: #111827;
-}
-
-button.secondary:hover {
-  background-color: #d1d5db;
-}
-
-/* =========================
-   TABLE WRAPPER
-========================= */
-.table-container {
-  overflow-x: auto;
-  overflow-y: auto;
-  max-height: 70vh;
-  border: 1px solid #e5e7eb;
-  border-radius: 8px;
-  background: white;
-  position: relative;
-}
-
-/* =========================
-   TABLE
-========================= */
-table {
-  border-collapse: collapse;
-  width: max-content;
-  min-width: 100%;
-}
-
-th, td {
-  border: 1px solid #e5e7eb;
-  padding: 8px 10px;
-  text-align: right;
-  white-space: nowrap;
-  font-size: 13px;
-}
-
-th {
-  background-color: #f1f5f9;
-  font-weight: 600;
-  text-align: center;
-}
-
-/* Freeze ONLY first column (Indicator) */
-th:first-child,
-td:first-child {
-  position: sticky;
-  left: 0;
-  background: white;
-  z-index: 2;
-  text-align: left;
-  font-weight: 500;
-}
-
-/* Keep header above sticky column */
-thead th {
-  position: sticky;
-  top: 0;
-  z-index: 3;
-  background: #f1f5f9;
-}
-
-/* Hover row effect */
-tbody tr:hover {
-  background-color: #f9fafb;
-  transition: background 0.2s ease;
-}
-
-/* =========================
-   PAGINATION
-========================= */
-.pagination {
-  margin-top: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-}
-
-.pagination select {
-  padding: 5px;
-  border-radius: 5px;
-  border: 1px solid #d1d5db;
-}
-
-.pagination button {
-  padding: 5px 10px;
-  font-size: 12px;
-}
-
-/* =========================
-   TOGGLE VIEW BUTTONS
-========================= */
-.view-toggle {
-  margin-bottom: 12px;
-}
-
-.view-toggle button.active {
-  background-color: #0f172a;
-}
-
-/* =========================
-   SMOOTH ANIMATIONS
-========================= */
-.fade-in {
-  animation: fadeIn 0.25s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* =========================
-   SCROLLBAR POLISH
-========================= */
-.table-container::-webkit-scrollbar {
-  height: 8px;
-  width: 8px;
-}
-
-.table-container::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
-}
-
-.table-container::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
-}
-
-/* =========================
-   RESPONSIVE
-========================= */
-@media (max-width: 900px) {
-  .sidebar {
-    position: absolute;
-    height: 100%;
-  }
-
-  .main {
-    padding: 15px;
-  }
-}
+<script src="app.js"></script>
+</body>
+</html>
