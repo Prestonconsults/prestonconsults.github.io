@@ -18,35 +18,37 @@
   <!-- LEFT SIDEBAR -->
   <aside class="sidebar">
 
-    <div class="filter-section">
-      <h3 onclick="toggleSection('indicatorPanel')">Indicators</h3>
-      <div id="indicatorPanel" class="panel">
-        <input type="text" id="indicatorSearch" placeholder="Search...">
-        <label><input type="checkbox" id="indicatorSelectAll"> Select All</label>
-        <div id="indicatorFilters"></div>
-      </div>
+  <div class="filter-section">
+    <h3 class="accordion-header" data-target="indicatorPanel">
+      Indicators
+    </h3>
+    <div id="indicatorPanel" class="panel">
+      <div id="indicatorFilters"></div>
     </div>
+  </div>
 
-    <div class="filter-section">
-      <h3 onclick="toggleSection('countryPanel')">Countries</h3>
-      <div id="countryPanel" class="panel">
-        <input type="text" id="countrySearch" placeholder="Search...">
-        <label><input type="checkbox" id="countrySelectAll"> Select All</label>
-        <div id="countryFilters"></div>
-      </div>
+  <div class="filter-section">
+    <h3 class="accordion-header" data-target="countryPanel">
+      Countries
+    </h3>
+    <div id="countryPanel" class="panel">
+      <div id="countryFilters"></div>
     </div>
+  </div>
 
-    <div class="filter-section">
-      <h3 onclick="toggleSection('yearPanel')">Years</h3>
-      <div id="yearPanel" class="panel">
-        <label><input type="checkbox" id="yearSelectAll"> Select All</label>
-        <div id="yearFilters"></div>
-      </div>
+  <div class="filter-section">
+    <h3 class="accordion-header" data-target="yearPanel">
+      Years
+    </h3>
+    <div id="yearPanel" class="panel">
+      <div id="yearFilters"></div>
     </div>
+  </div>
 
-    <button id="showBtn">Show Results</button>
+  <button id="showBtn">Show Results</button>
 
-  </aside>
+</aside>
+
 
   <!-- RIGHT CONTENT -->
   <main class="content">
