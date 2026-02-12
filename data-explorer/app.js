@@ -227,3 +227,27 @@ function showCorrectView() {
     chartContainer.style.display = "block";
   }
 }
+
+/* =========================
+   ACCORDION FILTER BEHAVIOR
+========================= */
+
+document.querySelectorAll(".accordion-header").forEach(header => {
+  header.addEventListener("click", function () {
+
+    const targetId = this.dataset.target;
+    const targetPanel = document.getElementById(targetId);
+
+    const isOpen = targetPanel.classList.contains("open");
+
+    // Close all panels first
+    document.querySelectorAll(".panel").forEach(panel => {
+      panel.classList.remove("open");
+    });
+
+    // If it was not open, open it
+    if (!isOpen) {
+      targetPanel.classList.add("open");
+    }
+  });
+});
