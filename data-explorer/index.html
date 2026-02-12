@@ -46,10 +46,12 @@
     <!-- TABLE -->
     <div id="tableContainer" class="table-container" style="display:none;">
       <button id="exportBtn">Export Data</button>
-      <table id="dataTable">
-        <thead><tr></tr></thead>
-        <tbody></tbody>
-      </table>
+      <div class="table-scroll">
+        <table id="dataTable">
+          <thead><tr></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
       <div class="pagination">
         <label>Rows per page:
           <select id="rowsPerPage">
