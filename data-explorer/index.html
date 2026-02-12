@@ -67,13 +67,25 @@
     </div>
 
     <div id="tableContainer" class="card" style="display:none;">
-      <button id="downloadBtn">Download CSV</button>
+      <button id="exportBtn">Export Data</button>
       <div class="table-wrapper">
         <table id="dataTable">
           <thead></thead>
           <tbody></tbody>
         </table>
       </div>
+      <div class="pagination">
+  <button id="prevPage">◀</button>
+  <span id="pageInfo"></span>
+  <button id="nextPage">▶</button>
+
+  <select id="rowsPerPage">
+    <option value="10">10</option>
+    <option value="25" selected>25</option>
+    <option value="50">50</option>
+    <option value="100">100</option>
+  </select>
+</div>
     </div>
 
     <div id="chartContainer" class="card" style="display:none;">
