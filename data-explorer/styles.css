@@ -20,13 +20,27 @@ header { text-align:center; padding:20px; }
 }
 
 .panel {
-  display:none;
-  background:#2e3f52;
-  padding:8px;
-  border-radius:6px;
-  margin-bottom:10px;
-  max-height:200px;
-  overflow-y:auto;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: #2e3f52;
+  border-radius: 6px;
+  margin-bottom: 10px;
+  padding: 0 8px;
+}
+
+.panel.open {
+  max-height: 300px;
+  padding: 8px;
+  overflow-y: auto;
+}
+
+.accordion-header {
+  cursor: pointer;
+  padding: 8px;
+  background: #1f2d3d;
+  margin-top: 10px;
+  border-radius: 6px;
 }
 
 .sidebar input[type=text] {
@@ -164,5 +178,6 @@ thead th {
   padding: 4px 8px;
   cursor: pointer;
 }
+
 
 
