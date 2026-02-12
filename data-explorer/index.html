@@ -1,89 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Preston Consults Data Explorer</title>
+<title>Prestong Consult | Internal Data Repository</title>
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
 
-<div class="container">
+<header class="app-header">
+  <h1>Preston Consults Data Explorer</h1>
+  <p>Interactive explorer for indicators, countries, and years.</p>
+</header>
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar" id="sidebar">
+<div class="main-layout">
+
+  <!-- Sidebar -->
+  <aside class="sidebar">
+
+    <!-- Indicator -->
     <div class="filter-section">
-      <h3 class="accordion-header" data-target="indicatorPanel">Indicators <span class="arrow">▼</span></h3>
-      <div id="indicatorPanel" class="sidebar-section"></div>
+      <div class="filter-header">Indicators</div>
+      <input type="text" placeholder="Search..." class="search-input" data-type="Indicator">
+      <label><input type="checkbox" class="select-all" data-type="Indicator"> Select All</label>
+      <div class="filter-options scrollable" id="Indicator-options"></div>
     </div>
 
+    <!-- Country -->
     <div class="filter-section">
-      <h3 class="accordion-header" data-target="countryPanel">Countries <span class="arrow">▼</span></h3>
-      <div id="countryPanel" class="sidebar-section"></div>
+      <div class="filter-header">Countries</div>
+      <input type="text" placeholder="Search..." class="search-input" data-type="Country">
+      <label><input type="checkbox" class="select-all" data-type="Country"> Select All</label>
+      <div class="filter-options scrollable" id="Country-options"></div>
     </div>
 
+    <!-- Year -->
     <div class="filter-section">
-      <h3 class="accordion-header" data-target="yearPanel">Years <span class="arrow">▼</span></h3>
-      <div id="yearPanel" class="sidebar-section"></div>
+      <div class="filter-header">Years</div>
+      <input type="text" placeholder="Search..." class="search-input" data-type="Year">
+      <label><input type="checkbox" class="select-all" data-type="Year"> Select All</label>
+      <div class="filter-options scrollable" id="Year-options"></div>
     </div>
 
-    <button id="showBtn">Show Results</button>
+    <button id="showResults">Show Results</button>
+    <button id="exportBtn">Export Data</button>
+
   </aside>
 
-  <!-- MAIN CONTENT -->
-  <main class="main">
-    <div class="view-toggle">
-      <button id="tableToggle" class="active">Table View</button>
-      <button id="chartToggle">Chart View</button>
-    </div>
+  <!-- Content -->
+  <div class="content">
 
-    <!-- PLACEHOLDER -->
-    <div id="placeholderMessage" class="placeholder">
-      <p id="placeholderText">Welcome to the Data Explorer.<br>Please select filters and click "Show Results" to begin.</p>
-    </div>
-
-    <!-- TABLE -->
-    <div id="tableContainer" class="table-container" style="display:none;">
-      <button id="exportBtn">Export Data</button>
-      <div class="table-scroll">
-        <table id="dataTable">
-          <thead><tr></tr></thead>
-          <tbody></tbody>
-        </table>
+    <div class="table-container">
+      <div id="tablePlaceholder" class="placeholder">
+        Welcome to the Data Explorer<br>
+        Please select filters and click "Show Results"
       </div>
+      <div class="loader hidden"></div>
+      <table id="dataTable"></table>
       <div class="pagination">
-        <label>Rows per page:
-          <select id="rowsPerPage">
-            <option value="10">10</option>
-            <option value="25" selected>25</option>
-            <option value="50">50</option>
-            <option value="100">100</option>
-          </select>
-        </label>
-        <button id="prevPage">◀</button>
-        <button id="nextPage">▶</button>
+        <button id="prevPage">Prev</button>
         <span id="pageInfo"></span>
+        <button id="nextPage">Next</button>
       </div>
     </div>
 
-    <!-- CHART -->
-    <div id="chartContainer" class="table-container" style="display:none; height:400px;">
-      <label>Select Indicator:
-        <select id="chartIndicator"></select>
-      </label>
-      <label>Select Country:
-        <select id="chartCountry"></select>
-      </label>
-      <canvas id="chartCanvas"></canvas>
+    <div class="chart-container">
+      <div id="chartPlaceholder" class="placeholder">
+        Chart Analysis<br>
+        Select filters and click "Show Results" to visualize data.
+      </div>
+      <div class="chart-controls hidden">
+        <select id="indicatorDropdown"></select>
+        <select id="countryDropdown"></select>
+      </div>
+      <canvas id="mainChart"></canvas>
     </div>
-  </main>
+
+  </div>
 
 </div>
-
-<footer>
-  <b>Developed by:</b> Preston Consults Ltd Research and Data Analysis Team
-</footer>
 
 <script src="app.js"></script>
 </body>
