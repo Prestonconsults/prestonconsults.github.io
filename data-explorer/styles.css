@@ -1,183 +1,264 @@
-* { box-sizing: border-box; margin: 0; padding: 0; }
+/* =========================
+   GLOBAL RESET
+========================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
 
-body { font-family: Arial; background:#f5f6fa; }
+body {
+  background-color: #f4f6f9;
+  color: #1f2937;
+  font-size: 14px;
+}
 
-header { text-align:center; padding:20px; }
+/* =========================
+   LAYOUT
+========================= */
+.container {
+  display: flex;
+  min-height: 100vh;
+}
 
-.layout { display:flex; }
-
+/* =========================
+   SIDEBAR
+========================= */
 .sidebar {
-  width:280px;
-  background:#1f2d3d;
-  color:white;
-  padding:15px;
-  min-height:100vh;
+  width: 280px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  z-index: 1000;
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
 }
 
 .sidebar h3 {
-  cursor:pointer;
-  margin:10px 0;
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-top: 18px;
+  letter-spacing: 0.3px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: color 0.2s ease;
 }
 
-.panel {
+.sidebar h3:hover {
+  color: #38bdf8;
+}
+
+.sidebar-section {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.3s ease;
-  background: #2e3f52;
-  border-radius: 6px;
-  margin-bottom: 10px;
-  padding: 0 8px;
+  transition: max-height 0.35s ease, opacity 0.3s ease;
+  opacity: 0;
 }
 
-.panel.open {
-  max-height: 300px;
-  padding: 8px;
-  overflow-y: auto;
-}
-
-.accordion-header {
-  cursor: pointer;
-  padding: 8px;
-  background: #1f2d3d;
-  margin-top: 10px;
-  border-radius: 6px;
-}
-
-.sidebar input[type=text] {
-  width:100%;
-  padding:6px;
-  margin-bottom:5px;
+.sidebar-section.active {
+  max-height: 500px;
+  opacity: 1;
 }
 
 .sidebar label {
-  display:block;
-  font-size:13px;
-  margin-bottom:3px;
-}
-
-#showBtn {
-  width:100%;
-  padding:8px;
-  background:#4CAF50;
-  border:none;
-  color:white;
-  cursor:pointer;
-  margin-top:10px;
-}
-
-.content {
-  flex:1;
-  padding:20px;
-}
-
-.view-toggle button {
-  margin-right:10px;
-  padding:6px 12px;
-  cursor:pointer;
-}
-
-.welcome {
-  margin-top:20px;
-  background:white;
-  padding:20px;
-  border-radius:8px;
-  text-align:center;
-}
-
-.card {
-  background:white;
-  padding:15px;
-  border-radius:8px;
-  margin-top:15px;
-}
-
-.table-wrapper {
-  overflow-x:auto;
-}
-
-table {
-  border-collapse:collapse;
-  min-width:max-content;
-}
-
-th, td {
-  border:1px solid #ddd;
-  padding:6px 10px;
-  white-space:nowrap;
-}
-
-th { background:#f2f2f2; }
-
-td:first-child, th:first-child {
-  position:sticky;
-  left:0;
-  background:white;
-  min-width:280px;
-  z-index:2;
-}
-
-.chart-wrapper {
-  max-width:800px;
-  height:400px;
-}
-
-footer {
-  text-align:center;
-  padding:15px;
-  background:linear-gradient(90deg,#1f2d3d,#4CAF50);
-  color:white;
-  margin-top:20px;
-}
-
-thead th {
-  position: sticky;
-  top: 0;
-  background: #f2f2f2;
-  z-index: 3;
-}
-
-.sticky-col {
-  position: sticky;
-  left: 0;
-  background: white;
-  z-index: 2;
-}
-
-.table-wrapper {
-  overflow-x: auto;
-  max-width: 100%;
-}
-
-#dataTable {
-  border-collapse: collapse;
-  min-width: max-content;
-}
-
-thead th {
-  position: sticky;
-  top: 0;
-  background: #f2f2f2;
-  z-index: 3;
-}
-
-.sticky-col {
-  position: sticky;
-  left: 0;
-  background: white;
-  z-index: 2;
-}
-
-.pagination {
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.pagination button {
-  padding: 4px 8px;
+  display: block;
+  margin: 6px 0;
+  font-size: 13px;
   cursor: pointer;
 }
 
+.sidebar input[type="checkbox"] {
+  margin-right: 6px;
+}
 
+/* Active highlight */
+.sidebar input[type="checkbox"]:checked + span {
+  color: #38bdf8;
+  font-weight: 500;
+}
 
+/* =========================
+   MAIN CONTENT
+========================= */
+.main {
+  flex: 1;
+  padding: 25px;
+  transition: margin-left 0.3s ease;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  background-color: #1d4ed8;
+  color: white;
+  border: none;
+  padding: 8px 14px;
+  margin: 5px 5px 10px 0;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+button:hover {
+  background-color: #2563eb;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+button.secondary {
+  background-color: #e5e7eb;
+  color: #111827;
+}
+
+button.secondary:hover {
+  background-color: #d1d5db;
+}
+
+/* =========================
+   TABLE WRAPPER
+========================= */
+.table-container {
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: 70vh;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: white;
+  position: relative;
+}
+
+/* =========================
+   TABLE
+========================= */
+table {
+  border-collapse: collapse;
+  width: max-content;
+  min-width: 100%;
+}
+
+th, td {
+  border: 1px solid #e5e7eb;
+  padding: 8px 10px;
+  text-align: right;
+  white-space: nowrap;
+  font-size: 13px;
+}
+
+th {
+  background-color: #f1f5f9;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Freeze ONLY first column (Indicator) */
+th:first-child,
+td:first-child {
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 2;
+  text-align: left;
+  font-weight: 500;
+}
+
+/* Keep header above sticky column */
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: 3;
+  background: #f1f5f9;
+}
+
+/* Hover row effect */
+tbody tr:hover {
+  background-color: #f9fafb;
+  transition: background 0.2s ease;
+}
+
+/* =========================
+   PAGINATION
+========================= */
+.pagination {
+  margin-top: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.pagination select {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #d1d5db;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  font-size: 12px;
+}
+
+/* =========================
+   TOGGLE VIEW BUTTONS
+========================= */
+.view-toggle {
+  margin-bottom: 12px;
+}
+
+.view-toggle button.active {
+  background-color: #0f172a;
+}
+
+/* =========================
+   SMOOTH ANIMATIONS
+========================= */
+.fade-in {
+  animation: fadeIn 0.25s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* =========================
+   SCROLLBAR POLISH
+========================= */
+.table-container::-webkit-scrollbar {
+  height: 8px;
+  width: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .sidebar {
+    position: absolute;
+    height: 100%;
+  }
+
+  .main {
+    padding: 15px;
+  }
+}
