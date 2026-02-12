@@ -129,3 +129,40 @@ thead th {
   z-index: 2;
 }
 
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+#dataTable {
+  border-collapse: collapse;
+  min-width: max-content;
+}
+
+thead th {
+  position: sticky;
+  top: 0;
+  background: #f2f2f2;
+  z-index: 3;
+}
+
+.sticky-col {
+  position: sticky;
+  left: 0;
+  background: white;
+  z-index: 2;
+}
+
+.pagination {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.pagination button {
+  padding: 4px 8px;
+  cursor: pointer;
+}
+
+
