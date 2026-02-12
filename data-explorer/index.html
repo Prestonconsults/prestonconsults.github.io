@@ -2,113 +2,105 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Preston Consults Data Repository</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Preston Consults Data Explorer</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+  
+  <div class="container">
 
-<header>
-  <h1>Data Explorer</h1>
-  <p>Interactive explorer for indicators, countries, and years.</p>
-</header>
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
 
-<div class="layout">
+      <div class="filter-section">
+        <h3 class="accordion-header" data-target="indicatorPanel">
+          Indicators <span class="arrow">▼</span>
+        </h3>
+        <div id="indicatorPanel" class="sidebar-section">
+          <div id="indicatorFilters"></div>
+        </div>
+      </div>
 
-  <!-- LEFT SIDEBAR -->
-<aside class="sidebar" id="sidebar">
+      <div class="filter-section">
+        <h3 class="accordion-header" data-target="countryPanel">
+          Countries <span class="arrow">▼</span>
+        </h3>
+        <div id="countryPanel" class="sidebar-section">
+          <div id="countryFilters"></div>
+        </div>
+      </div>
 
-  <div class="filter-section">
-    <h3 class="accordion-header" data-target="indicatorPanel">
-      Indicators <span class="arrow">▼</span>
-    </h3>
-    <div id="indicatorPanel" class="panel">
-      <div id="indicatorFilters"></div>
-    </div>
-  </div>
+      <div class="filter-section">
+        <h3 class="accordion-header" data-target="yearPanel">
+          Years <span class="arrow">▼</span>
+        </h3>
+        <div id="yearPanel" class="sidebar-section">
+          <div id="yearFilters"></div>
+        </div>
+      </div>
 
-  <div class="filter-section">
-    <h3 class="accordion-header" data-target="countryPanel">
-      Countries <span class="arrow">▼</span>
-    </h3>
-    <div id="countryPanel" class="panel">
-      <div id="countryFilters"></div>
-    </div>
-  </div>
+      <button id="showBtn">Show Results</button>
 
-  <div class="filter-section">
-    <h3 class="accordion-header" data-target="yearPanel">
-      Years <span class="arrow">▼</span>
-    </h3>
-    <div id="yearPanel" class="panel">
-      <div id="yearFilters"></div>
-    </div>
-  </div>
+    </aside>
 
-  <button id="showBtn">Show Results</button>
+    <!-- MAIN CONTENT -->
+    <main class="main">
 
-</aside>
+      <!-- VIEW TOGGLE -->
+      <div class="view-toggle">
+        <button id="tableToggle" class="active">Table View</button>
+        <button id="chartToggle">Chart View</button>
+      </div>
 
-
-
-  <!-- RIGHT CONTENT -->
-  <main class="content">
-
-    <div class="view-toggle">
-      <button id="tableToggle">Table View</button>
-      <button id="chartToggle">Chart View</button>
-    </div>
-
-    <div id="welcomeTable" class="welcome">
-      <h3>Welcome to the Data Explorer</h3>
-      <p>Please select filters and click "Show Results" to begin.</p>
-    </div>
-
-    <div id="welcomeChart" class="welcome" style="display:none;">
-      <h3>Chart Analysis</h3>
-      <p>Select filters and click "Show Results" to visualize data.</p>
-    </div>
-
-    <div id="tableContainer" class="card" style="display:none;">
-      <button id="exportBtn">Export Data</button>
-      <div class="table-wrapper">
+      <!-- TABLE CONTAINER -->
+      <div id="tableContainer" class="table-container fade-in">
+        <button id="downloadBtn">Export Data</button>
         <table id="dataTable">
-          <thead></thead>
+          <thead>
+            <tr></tr>
+          </thead>
           <tbody></tbody>
         </table>
+        <!-- Pagination placeholder -->
+        <div class="pagination">
+          <label>Rows per page:
+            <select id="rowsPerPage">
+              <option value="10">10</option>
+              <option value="25" selected>25</option>
+              <option value="50">50</option>
+              <option value="100">100</option>
+            </select>
+          </label>
+          <button id="prevPage">◀</button>
+          <button id="nextPage">▶</button>
+          <span id="pageInfo"></span>
+        </div>
       </div>
-      <div class="pagination">
-  <button id="prevPage">◀</button>
-  <span id="pageInfo"></span>
-  <button id="nextPage">▶</button>
 
-  <select id="rowsPerPage">
-    <option value="10">10</option>
-    <option value="25" selected>25</option>
-    <option value="50">50</option>
-    <option value="100">100</option>
-  </select>
-</div>
-    </div>
-
-    <div id="chartContainer" class="card" style="display:none;">
-      <div class="chart-controls">
-        <select id="chartIndicator"></select>
-        <select id="chartCountry"></select>
-      </div>
-      <div class="chart-wrapper">
+      <!-- CHART CONTAINER -->
+      <div id="chartContainer" class="table-container fade-in" style="display:none; height:400px;">
         <canvas id="chartCanvas"></canvas>
       </div>
-    </div>
 
-  </main>
+      <!-- INITIAL PLACEHOLDER -->
+      <div id="placeholderMessage">
+        <h3>Welcome to the Data Explorer</h3>
+        <p>Please select filters and click <b>Show Results</b> to begin.</p>
+      </div>
 
-</div>
+    </main>
 
-<footer>
-  Developed by: Preston Consults Ltd Research and Data Analysis Team
-</footer>
+  </div>
 
-<script src="app.js"></script>
+  <!-- FOOTER -->
+  <footer style="margin-top:20px; padding:15px; text-align:center; background:#1f2937; color:white; border-radius:8px;">
+    <b>Developed by:</b> Preston Consults Ltd Research and Data Analysis Team
+  </footer>
+
+  <!-- APP SCRIPT -->
+  <script src="app.js"></script>
+
 </body>
 </html>
