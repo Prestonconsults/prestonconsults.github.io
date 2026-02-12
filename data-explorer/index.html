@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Preston Consults Data Repository</title>
+<title>Preston Consults Data Explorer</title>
 <link rel="stylesheet" href="styles.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
@@ -46,12 +46,10 @@
     <!-- TABLE -->
     <div id="tableContainer" class="table-container" style="display:none;">
       <button id="exportBtn">Export Data</button>
-      <div class="table-scroll">
-        <table id="dataTable">
-          <thead><tr></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
+      <table id="dataTable">
+        <thead><tr></tr></thead>
+        <tbody></tbody>
+      </table>
       <div class="pagination">
         <label>Rows per page:
           <select id="rowsPerPage">
