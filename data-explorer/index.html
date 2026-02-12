@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Preston Consults Data Repository</title>
   <link rel="stylesheet" href="styles.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -14,55 +13,87 @@
   <p>Interactive explorer for indicators, countries, and years.</p>
 </header>
 
-<section id="filters">
-  <div class="filter-panel">
-    <h3>Indicators / Datasets</h3>
-    <input type="text" id="indicatorSearch" placeholder="Search indicators..." class="search-box">
-    <label><input type="checkbox" id="indicatorSelectAll"> Select All</label>
-    <div id="indicatorFilters" class="checkbox-panel"></div>
-  </div>
+<div class="layout">
 
-  <div class="filter-panel">
-    <h3>Countries</h3>
-    <input type="text" id="countrySearch" placeholder="Search countries..." class="search-box">
-    <label><input type="checkbox" id="countrySelectAll"> Select All</label>
-    <div id="countryFilters" class="checkbox-panel"></div>
-  </div>
+  <!-- LEFT SIDEBAR -->
+  <aside class="sidebar">
 
-  <div class="filter-panel">
-    <h3>Years</h3>
-    <label><input type="checkbox" id="yearSelectAll"> Select All</label>
-    <div id="yearFilters" class="checkbox-panel"></div>
-  </div>
+    <div class="filter-section">
+      <h3 onclick="toggleSection('indicatorPanel')">Indicators</h3>
+      <div id="indicatorPanel" class="panel">
+        <input type="text" id="indicatorSearch" placeholder="Search...">
+        <label><input type="checkbox" id="indicatorSelectAll"> Select All</label>
+        <div id="indicatorFilters"></div>
+      </div>
+    </div>
 
-  <button id="showBtn">Show Results</button>
-</section>
+    <div class="filter-section">
+      <h3 onclick="toggleSection('countryPanel')">Countries</h3>
+      <div id="countryPanel" class="panel">
+        <input type="text" id="countrySearch" placeholder="Search...">
+        <label><input type="checkbox" id="countrySelectAll"> Select All</label>
+        <div id="countryFilters"></div>
+      </div>
+    </div>
 
-<div id="tableContainer" class="card" style="display:none;">
-  <button id="downloadBtn">Download CSV</button>
-  <div id="dataTableContainer">
-    <table id="dataTable">
-      <thead>
-        <tr id="tableHeader">
-          <th>Indicator</th>
-          <th>Category</th>
-          <th>Country</th>
-          <th>Notes</th>
-          <th>Source</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
+    <div class="filter-section">
+      <h3 onclick="toggleSection('yearPanel')">Years</h3>
+      <div id="yearPanel" class="panel">
+        <label><input type="checkbox" id="yearSelectAll"> Select All</label>
+        <div id="yearFilters"></div>
+      </div>
+    </div>
+
+    <button id="showBtn">Show Results</button>
+
+  </aside>
+
+  <!-- RIGHT CONTENT -->
+  <main class="content">
+
+    <div class="view-toggle">
+      <button id="tableToggle">Table View</button>
+      <button id="chartToggle">Chart View</button>
+    </div>
+
+    <div id="welcomeTable" class="welcome">
+      <h3>Welcome to the Data Explorer</h3>
+      <p>Please select filters and click "Show Results" to begin.</p>
+    </div>
+
+    <div id="welcomeChart" class="welcome" style="display:none;">
+      <h3>Chart Analysis</h3>
+      <p>Select filters and click "Show Results" to visualize data.</p>
+    </div>
+
+    <div id="tableContainer" class="card" style="display:none;">
+      <button id="downloadBtn">Download CSV</button>
+      <div class="table-wrapper">
+        <table id="dataTable">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+
+    <div id="chartContainer" class="card" style="display:none;">
+      <div class="chart-controls">
+        <select id="chartIndicator"></select>
+        <select id="chartCountry"></select>
+      </div>
+      <div class="chart-wrapper">
+        <canvas id="chartCanvas"></canvas>
+      </div>
+    </div>
+
+  </main>
+
 </div>
 
-<div id="chartContainer" class="card" style="display:none;">
-  <h3>Chart View</h3>
-  <canvas id="chartCanvas" height="300"></canvas>
-</div>
+<footer>
+  Developed by: Preston Consults Ltd Research and Data Analysis Team
+</footer>
 
 <script src="app.js"></script>
-<br/>
-<div><p><b>Developed by:</b> Preston Consults Ltd Research and Data Analysis Team</p></div>
 </body>
 </html>
