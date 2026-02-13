@@ -1,134 +1,166 @@
 let rawData = [];
-let filteredData = [];
-let currentPage = 1;
-const rowsPerPage = 10;
-let chartInstance;
+let yearColumns = [];
+let chartInstance = null;
 
-fetch("data.csv")
-  .then(res => res.text())
-  .then(text => {
-    rawData = parseCSV(text);
-    initializeFilters();
-  });
+const sheetURL = "data.csv";
 
-function parseCSV(text) {
-  const rows = text.split("\n").map(r => r.split(","));
-  const headers = rows[0];
-  return rows.slice(1).map(r => {
-    let obj = {};
-    headers.forEach((h, i) => {
-      obj[h] = r[i] || "";
-    });
-    return obj;
-  });
+function toggleSection(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === "block" ? "none" : "block";
 }
 
-function initializeFilters() {
-  ["Indicator", "Country", "Year"].forEach(type => {
-    let values = [...new Set(rawData.map(d => d[type]))];
-    const container = document.getElementById(type + "-options");
-    values.forEach(v => {
-      container.innerHTML += `<label><input type="checkbox" value="${v}" data-type="${type}"> ${v}</label><br>`;
-    });
-  });
+function showTable() {
+  document.getElementById("tableView").style.display = "block";
+  document.getElementById("chartView").style.display = "none";
 }
 
-document.getElementById("showResults").onclick = () => {
-  applyFilters();
-  renderTable();
-  updateChart();
-};
+function showChart() {
+  document.getElementById("tableView").style.display = "none";
+  document.getElementById("chartView").style.display = "block";
+}
 
-function applyFilters() {
-  const selected = {};
-  ["Indicator", "Country", "Year"].forEach(type => {
-    selected[type] = [...document.querySelectorAll(`input[data-type="${type}"]:checked`)].map(cb => cb.value);
-  });
+Papa.parse(sheetURL, {
+  download: true,
+  header: true,
+  skipEmptyLines: true,
+  complete: function(results) {
 
-  filteredData = rawData.filter(d =>
-    (selected.Indicator.length === 0 || selected.Indicator.includes(d.Indicator)) &&
-    (selected.Country.length === 0 || selected.Country.includes(d.Country)) &&
-    (selected.Year.length === 0 || selected.Year.includes(d.Year))
+    rawData = results.data;
+    yearColumns = results.meta.fields.filter(f => /^\d{4}$/.test(f));
+
+    populateFilters();
+    populateChartDropdowns();
+  }
+});
+
+function populateFilters() {
+
+  const indicators = [...new Set(rawData.map(d => d.Indicator))];
+  const countries = [...new Set(rawData.map(d => d.Country))];
+
+  indicators.forEach(i =>
+    document.getElementById("indicatorSection")
+      .innerHTML += `<label><input type="checkbox" value="${i}"> ${i}</label>`
   );
 
-  currentPage = 1;
+  countries.forEach(c =>
+    document.getElementById("countrySection")
+      .innerHTML += `<label><input type="checkbox" value="${c}"> ${c}</label>`
+  );
+
+  yearColumns.forEach(y =>
+    document.getElementById("yearSection")
+      .innerHTML += `<label><input type="checkbox" value="${y}"> ${y}</label>`
+  );
 }
 
-function renderTable() {
-  const table = document.getElementById("dataTable");
-  const placeholder = document.getElementById("tablePlaceholder");
-  table.innerHTML = "";
+document.getElementById("applyFilters").addEventListener("click", () => {
 
-  if (!filteredData.length) {
-    placeholder.style.display = "block";
-    return;
-  }
+  const selectedIndicators = getChecked("indicatorSection");
+  const selectedCountries = getChecked("countrySection");
+  const selectedYears = getChecked("yearSection");
 
-  placeholder.style.display = "none";
+  const filtered = rawData.filter(d =>
+    (!selectedIndicators.length || selectedIndicators.includes(d.Indicator)) &&
+    (!selectedCountries.length || selectedCountries.includes(d.Country))
+  );
 
-  const headers = Object.keys(filteredData[0]);
-  table.innerHTML += "<thead><tr>" + headers.map(h => `<th>${h}</th>`).join("") + "</tr></thead>";
+  renderTable(filtered, selectedYears);
+});
 
-  const pageData = filteredData.slice((currentPage - 1) * rowsPerPage, currentPage * rowsPerPage);
-  table.innerHTML += "<tbody>" +
-    pageData.map(row =>
-      "<tr>" + headers.map(h =>
-        `<td>${row[h] === "" ? "..." : row[h]}</td>`
-      ).join("") + "</tr>"
-    ).join("") +
-    "</tbody>";
-
-  document.getElementById("pageInfo").innerText =
-    `Page ${currentPage} of ${Math.ceil(filteredData.length / rowsPerPage)}`;
+function getChecked(sectionId) {
+  return Array.from(document.querySelectorAll(`#${sectionId} input:checked`))
+    .map(cb => cb.value);
 }
 
-function updateChart() {
-  const placeholder = document.getElementById("chartPlaceholder");
-  const controls = document.querySelector(".chart-controls");
+function renderTable(data, selectedYears) {
 
-  if (!filteredData.length) {
-    placeholder.style.display = "block";
-    controls.classList.add("hidden");
-    return;
-  }
+  const thead = document.querySelector("#dataTable thead");
+  const tbody = document.querySelector("#dataTable tbody");
 
-  placeholder.style.display = "none";
-  controls.classList.remove("hidden");
+  thead.innerHTML = "";
+  tbody.innerHTML = "";
 
-  const first = filteredData[0];
-  renderChart(first);
+  const yearsToShow = selectedYears.length ? selectedYears : yearColumns;
+
+  let headerRow = `<tr>
+    <th>Indicator</th>
+    <th>Category</th>
+    <th>Country</th>
+    <th>Notes</th>
+    <th>Source</th>`;
+
+  yearsToShow.forEach(y => headerRow += `<th>${y}</th>`);
+  headerRow += "</tr>";
+
+  thead.innerHTML = headerRow;
+
+  data.forEach(row => {
+
+    let tr = `<tr>
+      <td>${row.Indicator}</td>
+      <td>${row.Category}</td>
+      <td>${row.Country}</td>
+      <td>${row.Notes || ""}</td>
+      <td>${row.Source || ""}</td>`;
+
+    yearsToShow.forEach(y => {
+      let val = row[y];
+      tr += `<td>${val && val !== "0" ? val : ""}</td>`;
+    });
+
+    tr += "</tr>";
+    tbody.innerHTML += tr;
+  });
 }
 
-function renderChart(row) {
-  const ctx = document.getElementById("mainChart").getContext("2d");
+function populateChartDropdowns() {
+
+  const indicatorSelect = document.getElementById("chartIndicator");
+  const countrySelect = document.getElementById("chartCountry");
+
+  [...new Set(rawData.map(d => d.Indicator))]
+    .forEach(i => indicatorSelect.innerHTML += `<option>${i}</option>`);
+
+  [...new Set(rawData.map(d => d.Country))]
+    .forEach(c => countrySelect.innerHTML += `<option>${c}</option>`);
+
+  indicatorSelect.addEventListener("change", drawChart);
+  countrySelect.addEventListener("change", drawChart);
+}
+
+function drawChart() {
+
+  const indicator = document.getElementById("chartIndicator").value;
+  const country = document.getElementById("chartCountry").value;
+
+  const record = rawData.find(d =>
+    d.Indicator === indicator && d.Country === country
+  );
+
+  if (!record) return;
+
+  const values = yearColumns.map(y => record[y] ? record[y] : null);
 
   if (chartInstance) chartInstance.destroy();
 
-  chartInstance = new Chart(ctx, {
-    type: "line",
-    data: {
-      labels: [row.Year],
-      datasets: [{
-        label: row.Indicator + " - " + row.Country,
-        data: [row.Value || null],
-        borderWidth: 2
-      }]
+  chartInstance = new Chart(
+    document.getElementById("chartCanvas"),
+    {
+      type: "line",
+      data: {
+        labels: yearColumns,
+        datasets: [{
+          label: indicator + " - " + country,
+          data: values,
+          borderWidth: 2,
+          tension: 0.3
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false
+      }
     }
-  });
+  );
 }
-
-document.getElementById("exportBtn").onclick = () => {
-  if (!filteredData.length) return;
-
-  const headers = Object.keys(filteredData[0]);
-  const csv = headers.join(",") + "\n" +
-    filteredData.map(row =>
-      headers.map(h => `"${row[h]}"`).join(",")
-    ).join("\n");
-
-  const blob = new Blob([csv], { type: "text/csv" });
-  const link = document.createElement("a");
-  link.href = URL.createObjectURL(blob);
-  link.download = "filtered_data.csv";
-  link.click();
-};
