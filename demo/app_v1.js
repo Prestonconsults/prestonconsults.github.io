@@ -8,7 +8,6 @@ let currentTimeframe = 'annual';
 let allColumns = [];
 let yearColumns = [];
 let otherColumns = [];
-let currentColumnsToShow = []; // Store columns for pagination
 
 // Timeframe configurations
 const timeframeConfig = {
@@ -315,7 +314,6 @@ function initializeViewToggle() {
       tableView.style.display = 'block';
       chartView.style.display = 'none';
       placeholder.style.display = 'none';
-      displayTable(filteredData, currentColumnsToShow); // Re-display current page
     } else {
       tableView.style.display = 'none';
       chartView.style.display = 'none';
@@ -331,7 +329,6 @@ function initializeViewToggle() {
       chartView.style.display = 'block';
       tableView.style.display = 'none';
       placeholder.style.display = 'none';
-      displayChart(filteredData, currentColumnsToShow); // Re-display with current columns
     } else {
       chartView.style.display = 'none';
       tableView.style.display = 'none';
@@ -354,9 +351,6 @@ function resetUI() {
   document.getElementById('chartViewBtn').classList.remove('active');
 }
 
-// Store current columns to show (needed for pagination)
-let currentColumnsToShow = [];
-
 // Show results based on filters
 function showResults() {
   const indicatorContainer = document.getElementById('indicatorFilters');
@@ -374,17 +368,11 @@ function showResults() {
   );
   
   // Get columns to show based on selected years
-  currentColumnsToShow = expandYearsToColumns(selectedYears);
+  const columnsToShow = expandYearsToColumns(selectedYears);
   
   // Reset pagination
   currentPage = 1;
   
-  // Display results
-  displayResults();
-}
-
-// Display results (separated from filtering for pagination)
-function displayResults() {
   // Update UI
   if (filteredData.length > 0) {
     document.getElementById('placeholderMessage').style.display = 'none';
@@ -395,11 +383,11 @@ function displayResults() {
     if (isTableView) {
       document.getElementById('tableView').style.display = 'block';
       document.getElementById('chartView').style.display = 'none';
-      displayTable(filteredData, currentColumnsToShow);
+      displayTable(filteredData, columnsToShow);
     } else {
       document.getElementById('chartView').style.display = 'block';
       document.getElementById('tableView').style.display = 'none';
-      displayChart(filteredData, currentColumnsToShow);
+      displayChart(filteredData, columnsToShow);
     }
   } else {
     document.getElementById('placeholderMessage').style.display = 'block';
@@ -475,13 +463,13 @@ function initializePagination() {
   rowsPerPageSelect.addEventListener('change', e => {
     rowsPerPage = parseInt(e.target.value);
     currentPage = 1;
-    displayResults(); // Just re-display, don't re-filter
+    showResults();
   });
   
   prevBtn.addEventListener('click', () => {
     if (currentPage > 1) {
       currentPage--;
-      displayResults(); // Just re-display, don't re-filter
+      showResults();
     }
   });
   
@@ -489,7 +477,7 @@ function initializePagination() {
     const totalPages = Math.ceil(filteredData.length / rowsPerPage);
     if (currentPage < totalPages) {
       currentPage++;
-      displayResults(); // Just re-display, don't re-filter
+      showResults();
     }
   });
 }
