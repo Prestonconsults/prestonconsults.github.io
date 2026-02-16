@@ -1,20 +1,8 @@
 # Preston Consults Data Repository - Complete Restructure
 
-## 🎉 What's New
-
-You now have a **professional multi-page data repository** with:
-- ✅ Home page with navigation
-- ✅ Two separate explorers (All Data & Trade Data)
-- ✅ Dark mode toggle
-- ✅ Responsive navigation with hamburger menu
-- ✅ Scroll-responsive header (full name → abbreviated)
-- ✅ FAQ page
-- ✅ About page
-- ✅ Efficient file organization
-
 ---
 
-## 📁 New File Structure
+## 📁 File Structure
 
 ```
 data-explorer/
@@ -54,17 +42,17 @@ data-explorer/
 ### 2. **Shared Header (All Pages)**
 **Desktop:**
 ```
-📊 Preston Consults Data Repository | Home | All Data | Trade Data | About | FAQ | Contact | ☀️ |
+Preston Consults Data Repository | Home | All Data | Trade Data | About | FAQ | Contact | ☀️ |
 ```
 
 **After Scrolling:**
 ```
-📊 PC Data Repo | Home | All Data | Trade Data | About | FAQ | Contact | ☀️ |
+Data Repository | Home | All Data | Trade Data | About | FAQ | Contact | ☀️ |
 ```
 
 **Mobile:**
 ```
-📊 PC Data Repo | ☀️ | ☰
+Data Repository | ☀️ | ☰
 ```
 Click ☰ → Full navigation slides in
 
@@ -93,59 +81,24 @@ Click ☰ → Full navigation slides in
 
 ## 🚀 Setup Instructions
 
-### Step 1: Update Your Files
+### Step 1: Upload Your Files
 
 **Required Files (11 total):**
 1. index.html (new home page)
 2. all-data.html (explorer)
 3. trade-data.html (trade explorer)
-4. about.html (update header - see note below)
+4. about.html (about team page)
 5. faq.html
-6. styles.css (NEEDS UPDATE - see below)
-7. app.js (NEEDS UPDATE - see below)
-8. theme.js (new)
-9. navigation.js (new)
-10. Data CSVs (organize in /data folder)
+6. styles.css 
+7. app.js 
+8. theme.js 
+9. navigation.js 
+10. Data CSVs (organize in `/data` folder)
 
 ### Step 2: Update about.html
 
-**Important:** The about.html needs the new header structure. Replace the `<header>` section with the same header from all-data.html or trade-data.html.
 
-### Step 3: Update styles.css
-
-The new styles.css needs to include:
-- Dark mode variables
-- New header styles (with scroll behavior)
-- Home page styles
-- FAQ page styles
-- Explore cards styling
-- Navigation responsive styles
-
-**⚠️ I'll provide this in the next message due to size**
-
-### Step 4: Update app.js
-
-The app.js needs to:
-- Detect which page it's on (all-data vs trade-data)
-- Load correct CSV files based on page
-- Support data/ folder structure
-
-**Key changes:**
-```javascript
-// Detect data source from page
-const dataSource = window.dataSource || 'all'; // 'all' or 'trade'
-
-// Update file paths
-const timeframeConfig = {
-  annual: {
-    file: `data/${dataSource}-annual-data.csv`,
-    // ...
-  },
-  // ...
-};
-```
-
-### Step 5: Organize Data Files
+### Step 2: Organize Data Files
 
 Create a `data/` folder with:
 ```
@@ -229,34 +182,6 @@ Home (index.html)
   └── Contact (index.html#contact)
 ```
 
----
-
-## ✅ Testing Checklist
-
-- [ ] Home page loads and cards link correctly
-- [ ] All Data Explorer loads with correct data
-- [ ] Trade Data Explorer loads with trade data
-- [ ] Dark mode toggle works on all pages
-- [ ] Header abbreviates when scrolling
-- [ ] Mobile hamburger menu works
-- [ ] FAQ accordions expand/collapse
-- [ ] All navigation links work
-- [ ] Export functionality works
-- [ ] Charts display correctly
-
----
-
-## 🆚 Old vs New Structure
-
-| Feature | Old | New |
-|---------|-----|-----|
-| Pages | 1 | 5 |
-| Data explorers | 1 | 2 |
-| Dark mode | ❌ | ✅ |
-| Responsive header | ❌ | ✅ |
-| FAQ page | ❌ | ✅ |
-| Organized data | ❌ | ✅ /data folder |
-| Home page | Simple | Professional landing |
 
 ---
 
@@ -269,13 +194,3 @@ The structure is now professional and scalable. You can easily:
 - Add more FAQ questions
 
 **Developed by:** Preston Consults Ltd Research and Data Analysis Team
-
----
-
-## 🚨 IMPORTANT NEXT STEPS
-
-1. **I need to provide you with the complete updated styles.css** (it's large)
-2. **I need to provide the updated app.js** with data source detection
-3. **You need to create trade quarterly/monthly CSVs** following the pattern I provided
-
-Let me know when you're ready and I'll provide the remaining critical files!
