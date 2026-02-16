@@ -508,7 +508,7 @@ function updatePaginationInfo(totalRows) {
   const endIndex = Math.min(currentPage * rowsPerPage, totalRows);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
   
-  paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${totalRows} records | Page ${currentPage} of ${totalPages}`;
+  paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${totalRows} rows | Page ${currentPage} of ${totalPages}`;
   
   prevBtn.disabled = currentPage === 1;
   nextBtn.disabled = currentPage === totalPages;
