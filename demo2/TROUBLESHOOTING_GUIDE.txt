@@ -1,0 +1,226 @@
+╔══════════════════════════════════════════════════════════════╗
+║  TROUBLESHOOTING: Data Explorer Pages Not Working           ║
+╚══════════════════════════════════════════════════════════════╝
+
+🔍 STEP-BY-STEP DEBUGGING GUIDE
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 1: Check Browser Console for Errors
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open all-data.html or trade-data.html
+2. Press F12 (or right-click → Inspect)
+3. Click "Console" tab
+4. Look for RED error messages
+
+COMMON ERRORS & FIXES:
+
+❌ "Failed to load data/all-annual-data.csv"
+   FIX: Your /data folder is missing or CSV files aren't uploaded
+   
+   ✅ SOLUTION:
+   - Create a folder called "data" in your repository
+   - Upload all 6 CSV files into the data/ folder
+   - Structure must be: data/all-annual-data.csv
+
+❌ "app.js:XX Uncaught ReferenceError: Chart is not defined"
+   FIX: Chart.js library didn't load
+   
+   ✅ SOLUTION:
+   - Check internet connection
+   - Verify this line is in HTML:
+     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+❌ "Cannot read property 'addEventListener' of null"
+   FIX: HTML elements not found
+   
+   ✅ SOLUTION:
+   - Make sure you uploaded the complete HTML files
+   - Re-download and re-upload all-data.html and trade-data.html
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 2: Verify File Structure
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Your repository MUST look EXACTLY like this:
+
+data-explorer/
+├── index.html
+├── all-data.html           ← Explorer page
+├── trade-data.html         ← Explorer page
+├── about.html
+├── faq.html
+├── styles.css              ← Updated version!
+├── app.js                  ← NEWLY FIXED VERSION!
+├── theme.js
+├── navigation.js
+└── data/                   ← MUST BE A FOLDER!
+    ├── all-annual-data.csv
+    ├── all-quarterly-data.csv
+    ├── all-monthly-data.csv
+    ├── trade-annual-data.csv
+    ├── trade-quarterly-data.csv
+    └── trade-monthly-data.csv
+
+🚨 CRITICAL: The "data" must be a FOLDER, not just files with "data-" prefix!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 3: Test the New app.js
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+The NEW app.js has debugging built in. When you open the page:
+
+1. Open Console (F12)
+2. You should see these messages:
+
+   ✅ "App initializing with data source: all"
+   ✅ "Loading annual data from: data/all-annual-data.csv"
+   ✅ "Data loaded successfully"
+   ✅ "Data parsed: 28 rows"
+   ✅ "Filters - Indicators: 7 Countries: 4 Years: 7"
+   ✅ "Show Results button connected"
+   ✅ "Pagination initialized"
+   ✅ "Export button initialized"
+
+If you DON'T see these messages, the app.js isn't loading properly.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 4: Check GitHub Pages Settings
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Go to repository Settings → Pages
+2. Verify:
+   ✅ Source: Deploy from branch
+   ✅ Branch: main (or master)
+   ✅ Folder: / (root)
+   ✅ Site is published
+
+3. Wait 2-3 minutes after uploading new files
+4. Hard refresh browser: Ctrl+Shift+R (Windows) or Cmd+Shift+R (Mac)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 5: Verify Data Folder in GitHub
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+In your GitHub repository, you should see:
+
+✅ A folder icon with "data" name
+✅ Click it → shows 6 CSV files inside
+✅ URLs should be: .../data/all-annual-data.csv
+
+❌ If files are at root level: all-annual-data.csv
+   This is WRONG! They MUST be inside a "data" folder!
+
+HOW TO CREATE FOLDER IN GITHUB:
+1. Click "Add file" → "Create new file"
+2. Type: data/placeholder.txt
+3. This creates the folder
+4. Upload CSV files into that folder
+5. Delete placeholder.txt
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 6: Test With Browser Developer Tools
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Open all-data.html
+2. F12 → Console tab
+3. Type this command:
+
+   window.dataSource
+
+   ✅ Should show: "all"
+
+4. Type this command:
+
+   allData.length
+
+   ✅ Should show a number (like 28 or more)
+
+5. If you see errors or "undefined", the data isn't loading.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+STEP 7: Re-download and Re-upload These Files
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If nothing works, download FRESH copies of:
+
+🔄 app.js              ← JUST UPDATED WITH FIXES!
+🔄 all-data.html
+🔄 trade-data.html
+
+And re-upload them to GitHub.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+QUICK TEST CHECKLIST
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Test on all-data.html:
+
+□ Page loads without errors
+□ Console shows "App initializing with data source: all"
+□ Console shows "Data loaded successfully"
+□ Timeframe buttons (Annual/Quarterly/Monthly) are visible in sidebar
+□ Filter accordions (Indicators/Countries/Years) open/close when clicked
+□ Checkboxes appear under each filter
+□ "Show Results" button is visible and clickable
+□ Console shows "Show Results clicked" when button pressed
+□ Table or chart appears after clicking "Show Results"
+
+If ANY of these fail, check the console for specific error messages.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+MOST COMMON ISSUE: Missing /data Folder
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+90% of "nothing works" issues are because:
+
+❌ CSV files are in root: all-annual-data.csv
+✅ CSV files should be in folder: data/all-annual-data.csv
+
+FIX:
+1. Create "data" folder in GitHub
+2. Move all 6 CSV files INTO that folder
+3. Verify URLs show: .../data/all-annual-data.csv
+4. Hard refresh browser
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+WHAT TO SEND IF STILL NOT WORKING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+If you've tried everything above:
+
+1. Take a screenshot of:
+   - Your GitHub repository file structure
+   - Browser console errors (F12 → Console)
+
+2. Send:
+   - The URL to your GitHub Pages site
+   - Console error messages
+   - Screenshot of file structure
+
+This will help diagnose the exact issue!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🎯 DOWNLOAD THE UPDATED app.js NOW!
+
+The new app.js includes:
+✓ Better error messages
+✓ Console debugging output
+✓ Checks for missing elements
+✓ Proper initialization
+✓ Fixed pagination
+
+Make sure you download and upload the LATEST version!
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
