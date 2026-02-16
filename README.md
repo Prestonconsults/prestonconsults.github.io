@@ -4,11 +4,9 @@
 ### Welcome to the Preston Consults Ltd Internal Data Repository
 
 
-This repository is set up to securely store relevant trade, investment, and macroeconomic datasets for use in consulting deliverables.
+This repository is set up to securely store relevant trade, investment, and macroeconomic datasets for ininternal usage.
 
-
-
-### This repository is currently managed by [Joseph David](https://smalljosephd.github.io/) and Nonso Nwanosike. If you experience any issues accessing data from this repository, please contact either Joseph or Nonso for assistance.
+### This repository is currently managed by [Joseph David](https://smalljosephd.github.io/) and Nonso Nwanosike. If you experience any issues working with this repository, please contact either Joseph or Nonso for assistance.
 
 ---
 
