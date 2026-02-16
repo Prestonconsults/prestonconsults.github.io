@@ -421,3 +421,41 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
+.sources-section {
+  background: white;
+  padding: 50px 40px;
+  border-radius: 12px;
+  margin-bottom: 40px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.sources-section h2 {
+  font-size: 28px;
+  color: #1e3c72;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.sources-intro {
+  text-align: center;
+  color: #5a6c7d;
+  margin-bottom: 30px;
+}
+
+.sources-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.source-badge {
+  background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+  color: white;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  font-weight: 600;
+  box-shadow: 0 2px 6px rgba(42, 82, 152, 0.2);
+}
