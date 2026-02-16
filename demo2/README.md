@@ -193,4 +193,14 @@ The structure is now professional and scalable. You can easily:
 - Customize dark mode colors
 - Add more FAQ questions
 
+---
+
+## 📧 SUPPORT
+
+If you need help or want to add features:
+
+**Email:** info@prestonconsultsltd.com  
+
+--- 
+
 **Developed by:** Preston Consults Ltd Research and Data Analysis Team
