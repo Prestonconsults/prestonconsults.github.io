@@ -656,9 +656,9 @@ function updateChart(data, columnsToShow) {
               // Add Notes (measurement units)
               const lines = [];
               lines.push(`Units: ${notes}`);
-              lines.push(`Category: ${category}`);
+              //lines.push(`Category: ${category}`);
               lines.push(`Country: ${selectedCountry}`);
-              lines.push(`Source: ${source}`);
+              //lines.push(`Source: ${source}`);
               return lines;
             }
           }
