@@ -508,7 +508,7 @@ function updatePaginationInfo(totalRows) {
   const endIndex = Math.min(currentPage * rowsPerPage, totalRows);
   const totalPages = Math.ceil(totalRows / rowsPerPage);
   
-  paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${totalRows} records | Page ${currentPage} of ${totalPages}`;
+  paginationInfo.textContent = `Showing ${startIndex}-${endIndex} of ${totalRows} rows | Page ${currentPage} of ${totalPages}`;
   
   prevBtn.disabled = currentPage === 1;
   nextBtn.disabled = currentPage === totalPages;
@@ -585,11 +585,6 @@ function updateChart(data, columnsToShow) {
   
   if (!chartData) return;
   
-  // Extract metadata for tooltip
-  const category = chartData[otherColumns[1]] || 'N/A';
-  const notes = chartData[otherColumns[3]] || 'N/A';
-  const source = chartData[otherColumns[4]] || 'N/A';
-  
   // Prepare chart data
   const sortedColumns = columnsToShow.sort((a, b) => a.localeCompare(b));
   const values = sortedColumns.map(col => chartData[col] || null);
@@ -634,34 +629,7 @@ function updateChart(data, columnsToShow) {
         },
         tooltip: {
           mode: 'index',
-          intersect: false,
-          backgroundColor: 'rgba(0, 0, 0, 0.8)',
-          titleFont: {
-            size: 14,
-            weight: 'bold'
-          },
-          bodyFont: {
-            size: 13
-          },
-          padding: 12,
-          displayColors: true,
-          callbacks: {
-            title: function(context) {
-              return context[0].label; // Period (e.g., "2023", "2023Q1", "2023-01")
-            },
-            label: function(context) {
-              return `${selectedIndicator}: ${context.parsed.y !== null ? context.parsed.y.toLocaleString() : 'N/A'}`;
-            },
-            afterLabel: function(context) {
-              // Add Notes (measurement units)
-              const lines = [];
-              lines.push(`Units: ${notes}`);
-              lines.push(`Category: ${category}`);
-              lines.push(`Country: ${selectedCountry}`);
-              lines.push(`Source: ${source}`);
-              return lines;
-            }
-          }
+          intersect: false
         }
       },
       scales: {
